@@ -1,0 +1,19 @@
+FROM python:3.6.12-alpine
+
+RUN mkdir app
+WORKDIR /app
+
+COPY ./src ./src/
+COPY ./db ./db/
+COPY app.py ./
+COPY requirements.txt ./
+
+
+
+RUN pip install -r requirements.txt
+
+EXPOSE 5000
+
+CMD ["flask","run","--host", "0.0.0.0"]
+
+

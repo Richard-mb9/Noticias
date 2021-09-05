@@ -1,0 +1,37 @@
+version: "3.1"
+services:
+  db:
+    image: mongo:4.2
+    container_name: db
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_DATABASE: news
+      MONGO_INITDB_ROOT_USERNAME: usermongo
+      MONGO_INITDB_ROOT_PASSWORD: mypass
+  api:
+    container_name: api
+    image: api-flask
+    build:
+      context: ./backend
+      dockerfile: dockerfile
+    environment:
+      secretkey: F7JDVETkFWAICKCQy9HbV1vLLIZbNoSAoGFqLJzTfQAqJ3v1uIjI3B0DNUG7AH0YW2PJQFnUN5XMH6HkXRKKuVXMvqE3sNZAV0GzIhZpuUfDcESCt3MQtMTIF2gdvPv0aBsuGTOGeLJMGegDJFQXELz1hFJMCt7em4CMLjhkPk4LbvTH5lfmYgcNFDG5DtrewcIeWPjN9vyRVR29PYqYuEzHGBQahVbngWofVPUDOlABryWxrf3ECkWQt8JpLqjW
+      mongohost: db
+      mongoport: 27017
+      mongouser: usermongo
+      mongopassword: mypass
+    ports:
+      - 5000:5000
+  web_app:
+    container_name: app
+    image: web_app
+    build:
+      context: ./web
+      dockerfile: dockerfile
+    ports:
+      - 3000:3000
+    environment:
+      base_api_url: api:5000
+  

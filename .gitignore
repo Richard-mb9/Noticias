@@ -1,0 +1,7 @@
+backend/venv
+backend/.vscode
+backend/__pycache__
+
+
+web/node_modules
+yarn.lock
